@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Calculadora WebSocket</title>
+</head>
+
+<body>
+
+    <h1>Somar dois números</h1>
+
+    <input id="numero1" type="number" placeholder="Número 1">
+
+    <input id="numero2" type="number" placeholder="Número 2">
+
+    <button onclick="somar()">Somar</button>
+
+    <h2 id="resultado"></h2>
+
+    <script>
+
+        function somar() {
+
+            let numero1 =
+                document.getElementById("numero1").value;
+
+            let numero2 =
+                document.getElementById("numero2").value;
+
+            let websocket =
+                new WebSocket("ws://localhost:8765");
+
+            websocket.onopen = function() {
+
+                websocket.send(numero1 + "," + numero2);
+
+            };
+
+            websocket.onmessage = function(event) {
+
+                document.getElementById("resultado").innerText =
+                    "Resultado: " + event.data;
+
+            };
+
+        }
+
+    </script>
+
+</body>
+
+</html>
